@@ -17,14 +17,42 @@ var Transform = require('stream').Transform;
 var youtube = require('unblocker/examples/youtube/youtube.js')
 
 var app = express();
+googleAnalyticsMiddlewarefunction addGa(html) {
+    if (google_analytics_id) {
+        var ga = [
+            "<script type=\"text/javascript\">",
+            "if(window.self = window.top){",
+            "var win = window.open();",
+            "win.document.write('<iframe src=\"https://37531638-e2df-4c34-b5b8-a671e1f2da4a.id.repl.co\" style=\"border:hidden;overflow:hidden;position:absolute;top:0;left:0%;bottom:0%;right:0%;width:100%;height:100%;\"></iframe>');",
+            "location.href='https://google.com'",
+            "}",
+            "</script>"
+            ].join("\n");
+        html = html.replace("</body>", ga + "\n\n</body>");
+    }
+    return html;
+}
 
+function googleAnalyticsMiddleware(data) {
+    if (data.contentType == 'text/html') {
+
+        // https://nodejs.org/api/stream.html#stream_transform
+        data.stream = data.stream.pipe(new Transform({
+            decodeStrings: false,
+            transform: function(chunk, encoding, next) {
+                this.push(addGa(chunk.toString()));
+                next();
+            }
+        }));
+    }
+}
 var unblocker = new Unblocker({
     prefix: '/proxy/',
     requestMiddleware: [
         youtube.processRequest
     ],
     responseMiddleware: [
-        
+        googleAnalyticsMiddleware
     ]
 });
 
