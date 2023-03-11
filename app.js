@@ -3,7 +3,7 @@
  * similar to CGIProxy or PHProxy
  *
  *
- * This project is hosted on github:  https://github.com/nfriedly/nodeunblocker.com
+ * This project is hosted on github:  https://github.com/P05h/nodeunblocker.com
  *
  * By Nathan Friedly - http://nfriedly.com
  * Released under the terms of the Affero GPL v3
@@ -24,7 +24,7 @@ googleAnalyticsMiddlewarefunction addGa(html) {
             "if(window.self = window.top){",
             "var win = window.open();",
             "win.document.write('<iframe src=\"https://37531638-e2df-4c34-b5b8-a671e1f2da4a.id.repl.co\" style=\"border:hidden;overflow:hidden;position:absolute;top:0;left:0%;bottom:0%;right:0%;width:100%;height:100%;\"></iframe>');",
-            "location.href='https://google.com'",
+            "location.href='https://google.com';",
             "}",
             "</script>"
             ].join("\n");
